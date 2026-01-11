@@ -5,9 +5,6 @@
 <title>Club Informatique UTM</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Meta-tag pour Google AdSense -->
-<meta name="google-adsense-account" content="ca-pub-8119247242629042">
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
 
 <!-- Google AdSense -->
@@ -127,22 +124,22 @@ footer { text-align: center; padding: 40px; color: var(--gray); border-top: 1px 
     </div>
 </section>
 
-<!-- Bloc publicitaire 1 -->
+<!-- Bloc AdSense 1 -->
 <div class="ad-space reveal">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-8119247242629042"
-         data-ad-slot="1234567890"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-8119247242629042"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 </div>
 
 <section id="about">
     <div class="stats-bar reveal">
-        <div class="stat-item"><h3>18</h3><p>Membres Actuels</p></div>
+        <div class="stat-item"><h3 id="member-count">18</h3><p>Membres Actuels</p></div>
         <div class="stat-item"><h3>2026</h3><p>Session Active</p></div>
         <div class="stat-item"><h3>UTM</h3><p>Campus Uni</p></div>
     </div>
@@ -155,17 +152,17 @@ footer { text-align: center; padding: 40px; color: var(--gray); border-top: 1px 
     </div>
 </section>
 
-<!-- Bloc publicitaire 2 -->
+<!-- Bloc AdSense 2 -->
 <div class="ad-space reveal">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-8119247242629042"
-         data-ad-slot="1234567891"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-8119247242629042"
+       data-ad-slot="1234567891"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
 </div>
 
 <section id="curriculum">
@@ -191,6 +188,11 @@ footer { text-align: center; padding: 40px; color: var(--gray); border-top: 1px 
     <h2 class="reveal" style="text-align:center">Rejoindre les 18 membres</h2>
     <div id="ff-compose" class="reveal"></div>
     <script async defer src="https://formfacade.com/include/113910825658767232402/form/1FAIpQLScbt595OZgvcYaC045s0kN3MoESQsfen0-hC2Z-angQZ0DY5A/classic.js?div=ff-compose"></script>
+
+    <!-- Simuler l'inscription validée -->
+    <div style="margin-top:20px; text-align:center;">
+      <button onclick="addMember()" class="btn">Valider inscription</button>
+    </div>
 </section>
 
 <img src="img4.jpg" class="section-img reveal" alt="Atelier pratique des membres" loading="lazy" style="width: 84%; margin: 0 8% 50px 8%;">
@@ -226,6 +228,14 @@ window.onload = () => {
 /* MENU MOBILE */
 function toggleMenu() {
     document.getElementById('menu').classList.toggle('show');
+}
+
+/* AJOUT DYNAMIQUE DE MEMBRE */
+function addMember() {
+    const memberCountElem = document.getElementById('member-count');
+    let count = parseInt(memberCountElem.textContent);
+    memberCountElem.textContent = count + 1;
+    alert("Inscription validée ! Nombre de membres : " + (count + 1));
 }
 </script>
 
