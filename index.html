@@ -2,14 +2,15 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Club Informatique UTM | Futur & Innovation</title>
+<title>Club Informatique UTM | Communauté & Innovation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
     --bg: #030508;
-    --surface: rgba(15, 18, 29, 0.6); /* Pour le glassmorphism */
+    --surface: rgba(15, 18, 29, 0.6);
     --text: #ffffff;
     --primary: #3b82f6;
     --accent: #00f2ff;
@@ -25,162 +26,171 @@
     --glass-border: rgba(0, 0, 0, 0.1);
 }
 
-* { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif; }
 body { background: var(--bg); color: var(--text); transition: 0.5s; scroll-behavior: smooth; overflow-x: hidden; }
 
-/* 1. TYPOGRAPHIE & GRADIENTS */
-h1 { 
-    font-size: clamp(2.5rem, 8vw, 4rem); 
-    line-height: 1.1; 
-    margin-bottom: 25px;
-    letter-spacing: -2px;
-}
-.gradient-text {
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 800;
-}
-p { line-height: 1.6; color: var(--gray); font-size: 1.1rem; }
-
-/* HEADER GLASS */
+/* HEADER */
 header {
     position: fixed; width: 100%; top: 0; padding: 15px 8%;
     display: flex; justify-content: space-between; align-items: center;
-    background: rgba(3, 5, 8, 0.7);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid var(--glass-border);
-    z-index: 1000;
+    background: rgba(3, 5, 8, 0.7); backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--glass-border); z-index: 1000;
 }
-header img { height: 45px; filter: drop-shadow(0 0 5px var(--primary)); }
+nav a { color: var(--text); text-decoration: none; margin-left: 25px; font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
+nav a:hover { color: var(--accent); }
 
-/* 2. GLASSMORPHISM CARDS */
-.card { 
-    background: var(--surface); 
-    padding: 30px; 
-    border-radius: 24px; 
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.card:hover { 
-    transform: translateY(-10px); 
-    border-color: var(--primary);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
+/* REUSABLE COMPONENTS */
+section { padding: 80px 8%; }
+.gradient-text { background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
+.card { background: var(--surface); padding: 30px; border-radius: 24px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); transition: 0.4s; }
+.section-header { text-align: center; margin-bottom: 50px; }
+.section-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
+.btn { padding: 14px 35px; background: var(--primary); color: white; border-radius: 12px; text-decoration: none; font-weight: 700; display: inline-block; transition: 0.3s; border: none; cursor: pointer; }
+.btn:hover { box-shadow: 0 0 20px var(--primary); transform: translateY(-2px); }
 
-/* 3. MICRO-INTERACTIONS (BOUTONS) */
-.btn { 
-    padding: 14px 35px; 
-    background: var(--primary); 
-    color: white; 
-    border-radius: 12px; 
-    text-decoration: none; 
-    font-weight: 700; 
-    display: inline-block; 
-    transition: 0.3s;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
-}
-.btn:hover { 
-    background: var(--accent); 
-    color: #000;
-    box-shadow: 0 0 25px var(--accent);
-    transform: translateY(-2px);
-}
+/* 3. À PROPOS */
+.about-container { display: flex; gap: 50px; align-items: center; flex-wrap: wrap; }
+.about-text { flex: 1; min-width: 300px; }
+.about-img { flex: 1; min-width: 300px; border-radius: 30px; overflow: hidden; border: 1px solid var(--glass-border); }
 
-/* 5. BENTO GRID (GALERIE) */
-.bento-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 200px);
-    gap: 15px;
-    margin: 50px 0;
-}
-.bento-item { border-radius: 20px; overflow: hidden; position: relative; }
-.bento-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-.bento-item:hover img { transform: scale(1.1); }
-.bento-1 { grid-column: span 2; grid-row: span 2; }
-.bento-2 { grid-column: span 2; }
-.bento-3 { grid-column: span 1; }
-.bento-4 { grid-column: span 1; }
+/* 2. PROGRAMME (ENTÊTE + GRID) */
+.prog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+.prog-card i { font-size: 2rem; color: var(--accent); margin-bottom: 20px; display: block; }
 
-/* SECTIONS & SHAPES */
-section { padding: 120px 8%; position: relative; }
-.hero { display: flex; align-items: center; gap: 50px; min-height: 90vh; }
+/* 4. MEMBRES & PETIT MOT */
+.members-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 40px; }
+.member-card { text-align: center; }
+.member-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid var(--primary); }
+.quote-box { background: var(--surface); padding: 40px; border-radius: 30px; margin-top: 60px; position: relative; border-left: 5px solid var(--accent); }
 
-.toggle { cursor: pointer; color: var(--primary); background: none; border: none; font-size: 1.4rem; }
-
-@media(max-width: 900px) {
-    .hero { flex-direction: column; text-align: center; padding-top: 150px; }
-    .bento-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
-    .bento-1 { grid-column: span 2; height: 300px; }
-}
-
-/* ANIMATIONS REVEAL */
-.reveal { opacity: 0; transform: translateY(40px); transition: 1s ease-out; }
+/* ANIMATIONS */
+.reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
+
+/* MOBILE */
+@media(max-width: 768px) {
+    header { padding: 15px 5%; }
+    nav { display: none; }
+}
 </style>
 </head>
 <body>
 
 <header>
-    <img src="logo.png" alt="Logo">
-    <div style="display:flex; align-items:center; gap:20px;">
-        <nav id="menu" class="desktop-nav">
-            <a href="#home" style="color:var(--text); text-decoration:none; margin-left:20px; font-weight:500;">Accueil</a>
-            <a href="#curriculum" style="color:var(--text); text-decoration:none; margin-left:20px; font-weight:500;">Programme</a>
-        </nav>
-        <button class="toggle" onclick="mode()" aria-label="Theme"><i class="fas fa-moon"></i></button>
-    </div>
+    <img src="logo.png" alt="UTM Logo" style="height: 40px;">
+    <nav>
+        <a href="#about">À Propos</a>
+        <a href="#programme">Programme</a>
+        <a href="#members">Membres</a>
+        <a href="#contact">Inscription</a>
+    </nav>
+    <button class="toggle" onclick="mode()" style="background:none; border:none; color:var(--primary); cursor:pointer; font-size:1.2rem;">
+        <i class="fas fa-moon"></i>
+    </button>
 </header>
 
 <main>
-    <section id="home" class="hero">
-        <div class="hero-text reveal">
-            <h1>L'informatique <br><span class="gradient-text">Réinventée à l'UTM</span></h1>
-            <p>Plus qu'un club, une forge technologique où 18 esprits façonnent le web de demain. Apprenez, codez, et brillez.</p>
-            <div style="margin-top:35px;">
-                <a href="#contact" class="btn">Rejoindre l'élite</a>
+    <section id="home" style="padding-top: 150px; text-align: center;">
+        <h1 class="reveal">Propulsez votre passion <br><span class="gradient-text">Informatique à l'UTM</span></h1>
+        <p class="reveal" style="max-width: 700px; margin: 20px auto;">Une immersion totale dans le monde de la tech : du code aux réalités professionnelles.</p>
+    </section>
+
+    <section id="about" class="reveal">
+        <div class="about-container">
+            <div class="about-img">
+                <img src="img1.jpg" alt="Notre Club" style="width: 100%;">
             </div>
-        </div>
-        <div class="hero-img reveal">
-            <img src="img2.jpg" class="section-img" alt="Hero Image" style="border: 1px solid var(--glass-border);">
+            <div class="about-text">
+                <h2 class="gradient-text">Qui sommes-nous ?</h2>
+                <p style="margin: 20px 0;">Le Club Informatique de l'UTM est un laboratoire d'idées où la curiosité rencontre l'expertise. Notre mission est de réduire l'écart entre les cours théoriques et le monde professionnel de la haute technologie.</p>
+                <div style="display: flex; gap: 20px;">
+                    <div><strong>18</strong><br><small>Membres</small></div>
+                    <div><strong>5+</strong><br><small>Projets/an</small></div>
+                    <div><strong>100%</strong><br><small>Passion</small></div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section id="gallery">
-        <h2 class="reveal" style="margin-bottom:30px;">La vie au club</h2>
-        <div class="bento-grid reveal">
-            <div class="bento-item bento-1"><img src="img1.jpg" alt="Atelier"></div>
-            <div class="bento-item bento-2"><img src="img3.jpg" alt="Hackathon"></div>
-            <div class="bento-item bento-3"><img src="img4.jpg" alt="Code"></div>
-            <div class="bento-item bento-4"><img src="img2.jpg" alt="Team"></div>
+    <section id="programme" class="reveal">
+        <div class="section-header">
+            <h2 class="gradient-text">Notre Programme 2026</h2>
+            <p>Une année riche en découvertes et en networking professionnel.</p>
+        </div>
+        <div class="prog-grid">
+            <div class="card prog-card">
+                <i class="fas fa-building"></i>
+                <h3>Visites d'entreprises</h3>
+                <p>Découverte des data-centers et des agences de développement locales.</p>
+            </div>
+            <div class="card prog-card">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <h3>Masterclass Tech</h3>
+                <p>Interventions d'experts sur l'IA, la Cybersécurité et le Cloud.</p>
+            </div>
+            <div class="card prog-card">
+                <i class="fas fa-code-branch"></i>
+                <h3>Ateliers Pratiques</h3>
+                <p>Sessions de codage collaboratif sur des projets open-source.</p>
+            </div>
+            <div class="card prog-card">
+                <i class="fas fa-users"></i>
+                <h3>Meetups & Networking</h3>
+                <p>Soirées d'échange avec d'anciens étudiants devenus ingénieurs.</p>
+            </div>
         </div>
     </section>
 
-    <section id="curriculum">
-        <div class="grid">
-            <div class="card reveal">
-                <i class="fab fa-python" style="font-size:2rem; color:var(--primary); margin-bottom:15px;"></i>
-                <h3>Python Pro</h3>
-                <p>Automatisation et Intelligence Artificielle.</p>
+    <section id="members" class="reveal">
+        <div class="section-header">
+            <h2>L'Équipe Core</h2>
+        </div>
+        <div class="members-grid">
+            <div class="member-card">
+                <img src="img2.jpg" class="member-img" alt="Président">
+                <h4>Kenza</h4>
+                <p><small>Président</small></p>
             </div>
-            <div class="card reveal">
-                <i class="fas fa-code" style="font-size:2rem; color:var(--accent); margin-bottom:15px;"></i>
-                <h3>Web Design</h3>
-                <p>Interfaces modernes et UX haut de gamme.</p>
+            <div class="member-card">
+                <img src="img3.jpg" class="member-img" alt="Responsable Tech">
+                <h4>---</h4>
+                <p><small>adjoint president</small></p>
             </div>
-            <div class="card reveal">
-                <i class="fas fa-rocket" style="font-size:2rem; color:var(--primary); margin-bottom:15px;"></i>
-                <h3>Hackathons</h3>
-                <p>Relevez des défis réels en temps record.</p>
+            <div class="member-card">
+                <img src="img3.jpg" class="member-img" alt="Responsable Tech">
+                <h4>Guira yahaya</h4>
+                <p><small>responsable technique1</small></p>
             </div>
+            <div class="member-card">
+                <img src="img3.jpg" class="member-img" alt="Responsable Tech">
+                <h4>---</h4>
+                <p><small>responsable technique2</small></p>
+            </div>
+            </div>
+
+        <div class="quote-box reveal">
+            <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--primary); opacity: 0.3;"></i>
+            <p style="font-style: italic; font-size: 1.2rem; margin-top: 10px;">
+                "L'informatique ne s'apprend pas seulement dans les livres, elle se vit. Rejoindre ce club, c'est choisir de devenir un acteur du changement numérique dès aujourd'hui."
+            </p>
+            <p style="margin-top: 15px; font-weight: bold;">— Le Bureau du Club</p>
+        </div>
+    </section>
+
+    <section id="contact" class="reveal">
+        <div class="section-header">
+            <h2 class="gradient-text">Prêt à nous rejoindre ?</h2>
+            <p>Remplissez le formulaire ci-dessous pour postuler.</p>
+        </div>
+        <div class="card" style="max-width: 800px; margin: 0 auto; background: white; padding: 10px;">
+            <div id="ff-compose"></div>
+            <script async defer src="https://formfacade.com/include/113910825658767232402/form/1FAIpQLScbt595OZgvcYaC045s0kN3MoESQsfen0-hC2Z-angQZ0DY5A/classic.js?div=ff-compose"></script>
         </div>
     </section>
 </main>
 
-<footer>
-    <p>© 2026 Club Informatique UTM – Conçu pour l'excellence</p>
+<footer style="text-align: center; padding: 50px; border-top: 1px solid var(--glass-border);">
+    <p>© 2026 Club Informatique UTM</p>
 </footer>
 
 <script>
@@ -196,14 +206,6 @@ function mode() {
     const icon = document.querySelector('.toggle i');
     icon.classList.toggle('fa-moon');
     icon.classList.toggle('fa-sun');
-    localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
-}
-
-window.onload = () => {
-    if(localStorage.getItem('theme') === 'light') {
-        document.body.classList.add('light');
-        document.querySelector('.toggle i').classList.replace('fa-moon', 'fa-sun');
-    }
 }
 </script>
 </body>
