@@ -19,14 +19,18 @@
     --accent: #00f2ff;
     --gray: #94a3b8;
     --glass-border: rgba(255, 255, 255, 0.1);
+    --input-bg: rgba(255,255,255,0.03);
+    --input-border: rgba(255,255,255,0.12);
 }
 .light {
     --bg: #f0f4f8;
-    --surface: rgba(255, 255, 255, 0.9);
+    --surface: rgba(255, 255, 255, 0.95);
     --text: #0f172a;
     --primary: #2563eb;
     --accent: #06b6d4;
     --glass-border: rgba(0, 0, 0, 0.08);
+    --input-bg: #ffffff;
+    --input-border: rgba(15, 23, 42, 0.08);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif; }
@@ -107,6 +111,58 @@ section { padding: 80px 8%; }
 .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
 
+/* CONTACT / FORM STYLES
+   - On cible le conteneur d'embed (#ff-compose) et les éléments de formulaire courants.
+   - On force la couleur du texte et un fond adapté au thème.
+*/
+#ff-compose { color: var(--text); }
+#ff-compose, 
+#ff-compose label, 
+#ff-compose .ff-field, 
+#ff-compose .ff-form, 
+#ff-compose input, 
+#ff-compose textarea, 
+#ff-compose select, 
+#ff-compose button {
+  color: var(--text) !important;
+  background: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+}
+
+/* Inputs specifics */
+#ff-compose input,
+#ff-compose textarea,
+#ff-compose select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--input-border) !important;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--text) !important;
+  background: var(--input-bg) !important;
+}
+
+/* Labels and helper texts */
+#ff-compose label,
+#ff-compose .ff-help,
+#ff-compose .ff-hint,
+#ff-compose .ff-description {
+  color: var(--text) !important;
+}
+
+/* Buttons inside the embed */
+#ff-compose button {
+  background: var(--primary) !important;
+  color: #fff !important;
+  border: none !important;
+  padding: 10px 16px !important;
+  border-radius: 8px !important;
+}
+
+/* If the embed injects an iframe we can't style its internals; style the iframe element itself to match container */
+#ff-compose iframe { background: transparent; display: block; width: 100%; border: none; }
+
 /* MOBILE adjustments for sections */
 @media(max-width: 480px) {
   .section-header h2 { font-size: 1.6rem; }
@@ -120,8 +176,8 @@ section { padding: 80px 8%; }
 
 <header>
     <div style="display:flex;align-items:center;gap:12px">
-      <img src="logo.png" alt="UTM Logo" class="logo">
-      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" onclick="toggleNav()">
+      <img src="logo.png" alt="UTM Logo" class="logo" style="height:40px;">
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" onclick="toggleNav()" style="display:none">
         <i class="fas fa-bars"></i>
       </button>
     </div>
@@ -233,8 +289,8 @@ section { padding: 80px 8%; }
             <h2 class="gradient-text">Prêt à nous rejoindre ?</h2>
             <p>Remplissez le formulaire ci-dessous pour postuler.</p>
         </div>
-        <div class="card" style="max-width: 800px; margin: 0 auto;">
-            <div id="ff-compose"></div>
+        <div class="card" style="max-width: 900px; margin: 0 auto; padding: 18px;">
+            <div id="ff-compose" aria-live="polite"></div>
             <script async defer src="https://formfacade.com/include/113910825658767232402/form/1FAIpQLScbt595OZgvcYaC045s0kN3MoESQsfen0-hC2Z-angQZ0DY5A/classic.js?div=ff-compose"></script>
         </div>
     </section>
@@ -273,10 +329,11 @@ function mode() {
   } catch(e){}
 })();
 
-/* MOBILE NAV TOGGLE */
+/* MOBILE NAV TOGGLE (simple) */
 function toggleNav(){
   const nav = document.getElementById('main-nav');
   const btn = document.querySelector('.nav-toggle');
+  if (!nav || !btn) return;
   const expanded = nav.classList.toggle('show');
   btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
 }
