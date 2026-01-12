@@ -2,10 +2,13 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Club Informatique UTM | Communauté & Innovation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
+<meta name="description" content="Club Informatique UTM — communauté étudiante dédiée à la tech : ateliers, masterclass, visites d'entreprises et projets open-source.">
+<title>Club Informatique UTM | Communauté & Innovation</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" defer></script>
 
 <style>
 :root {
@@ -19,15 +22,37 @@
 }
 .light {
     --bg: #f0f4f8;
-    --surface: rgba(255, 255, 255, 0.7);
+    --surface: rgba(255, 255, 255, 0.9);
     --text: #0f172a;
     --primary: #2563eb;
     --accent: #06b6d4;
-    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-border: rgba(0, 0, 0, 0.08);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif; }
 body { background: var(--bg); color: var(--text); transition: 0.5s; scroll-behavior: smooth; overflow-x: hidden; }
+
+a { color: inherit; }
+
+/* SKIP LINK */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  left: 8%;
+  top: 12px;
+  width: auto;
+  height: auto;
+  padding: 8px 12px;
+  background: var(--surface);
+  border-radius: 6px;
+  z-index: 1200;
+}
 
 /* HEADER */
 header {
@@ -36,13 +61,28 @@ header {
     background: rgba(3, 5, 8, 0.7); backdrop-filter: blur(15px);
     border-bottom: 1px solid var(--glass-border); z-index: 1000;
 }
+.logo { height: 40px; }
+
+/* NAV */
+nav { display: flex; align-items: center; gap: 12px; }
 nav a { color: var(--text); text-decoration: none; margin-left: 25px; font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
 nav a:hover { color: var(--accent); }
+
+/* Mobile nav */
+.nav-toggle, .theme-toggle { background:none; border:none; color:var(--primary); cursor:pointer; font-size:1.2rem; padding: 6px; }
+.nav-toggle { display: none; }
+@media (max-width: 768px) {
+  .nav-toggle { display: inline-flex; align-items:center; justify-content:center; }
+  nav { display: none; position: absolute; top: 68px; left: 0; right: 0; padding: 18px 8%; background: var(--surface); flex-direction: column; gap: 10px; border-bottom: 1px solid var(--glass-border); }
+  nav.show { display: flex; }
+  nav a { margin: 8px 0; }
+  header { padding: 12px 5%; }
+}
 
 /* REUSABLE COMPONENTS */
 section { padding: 80px 8%; }
 .gradient-text { background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; }
-.card { background: var(--surface); padding: 30px; border-radius: 24px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); transition: 0.4s; }
+.card { background: var(--surface); padding: 30px; border-radius: 24px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); transition: 0.4s; color: var(--text); }
 .section-header { text-align: center; margin-bottom: 50px; }
 .section-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
 .btn { padding: 14px 35px; background: var(--primary); color: white; border-radius: 12px; text-decoration: none; font-weight: 700; display: inline-block; transition: 0.3s; border: none; cursor: pointer; }
@@ -67,29 +107,40 @@ section { padding: 80px 8%; }
 .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
 
-/* MOBILE */
-@media(max-width: 768px) {
-    header { padding: 15px 5%; }
-    nav { display: none; }
+/* MOBILE adjustments for sections */
+@media(max-width: 480px) {
+  .section-header h2 { font-size: 1.6rem; }
+  .about-container { gap: 20px; }
 }
 </style>
 </head>
 <body>
 
+<a class="skip-link" href="#main">Aller au contenu</a>
+
 <header>
-    <img src="logo.png" alt="UTM Logo" style="height: 40px;">
-    <nav>
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="logo.png" alt="UTM Logo" class="logo">
+      <button class="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" onclick="toggleNav()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <nav id="main-nav" role="navigation" aria-label="Navigation principale">
         <a href="#about">À Propos</a>
         <a href="#programme">Programme</a>
         <a href="#members">Membres</a>
         <a href="#contact">Inscription</a>
     </nav>
-    <button class="toggle" onclick="mode()" style="background:none; border:none; color:var(--primary); cursor:pointer; font-size:1.2rem;">
+
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="theme-toggle" aria-label="Basculer thème clair/sombre" onclick="mode()">
         <i class="fas fa-moon"></i>
-    </button>
+      </button>
+    </div>
 </header>
 
-<main>
+<main id="main">
     <section id="home" style="padding-top: 150px; text-align: center;">
         <h1 class="reveal">Propulsez votre passion <br><span class="gradient-text">Informatique à l'UTM</span></h1>
         <p class="reveal" style="max-width: 700px; margin: 20px auto;">Une immersion totale dans le monde de la tech : du code aux réalités professionnelles.</p>
@@ -97,12 +148,12 @@ section { padding: 80px 8%; }
 
     <section id="about" class="reveal">
         <div class="about-container">
-            <div class="about-img">
-                <img src="img1.jpg" alt="Notre Club" style="width: 100%;">
+            <div class="about-img card" aria-hidden="true">
+                <img src="img1.jpg" alt="Photo du club" style="width:100%;height:auto;" loading="lazy">
             </div>
             <div class="about-text">
                 <h2 class="gradient-text">Qui sommes-nous ?</h2>
-                <p style="margin: 20px 0;">Le Club Informatique de l'UTM est un laboratoire d'idées où la curiosité rencontre l'expertise. Notre mission est de réduire l'écart entre les cours théoriques et le monde professionnel de la haute technologie.</p>
+                <p style="margin: 20px 0;">Le Club Informatique de l'UTM est un laboratoire d'idées où la curiosité rencontre l'expertise. Notre mission est de réduire l'écart entre les cours théoriques et la pratique. Nous organisons ateliers, masterclass et projets collaboratifs pour préparer la transition vers le monde professionnel.</p>
                 <div style="display: flex; gap: 20px;">
                     <div><strong>18</strong><br><small>Membres</small></div>
                     <div><strong>5+</strong><br><small>Projets/an</small></div>
@@ -119,22 +170,22 @@ section { padding: 80px 8%; }
         </div>
         <div class="prog-grid">
             <div class="card prog-card">
-                <i class="fas fa-building"></i>
+                <i class="fas fa-building" aria-hidden="true"></i>
                 <h3>Visites d'entreprises</h3>
                 <p>Découverte des data-centers et des agences de développement locales.</p>
             </div>
             <div class="card prog-card">
-                <i class="fas fa-chalkboard-teacher"></i>
+                <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
                 <h3>Masterclass Tech</h3>
-                <p>Interventions d'experts sur l'IA, la Cybersécurité et le Cloud.</p>
+                <p>Interventions d'experts sur l'IA, la cybersécurité et le cloud.</p>
             </div>
             <div class="card prog-card">
-                <i class="fas fa-code-branch"></i>
+                <i class="fas fa-code-branch" aria-hidden="true"></i>
                 <h3>Ateliers Pratiques</h3>
                 <p>Sessions de codage collaboratif sur des projets open-source.</p>
             </div>
             <div class="card prog-card">
-                <i class="fas fa-users"></i>
+                <i class="fas fa-users" aria-hidden="true"></i>
                 <h3>Meetups & Networking</h3>
                 <p>Soirées d'échange avec d'anciens étudiants devenus ingénieurs.</p>
             </div>
@@ -146,30 +197,30 @@ section { padding: 80px 8%; }
             <h2>L'Équipe Core</h2>
         </div>
         <div class="members-grid">
-            <div class="member-card">
-                <img src="img2.jpg" class="member-img" alt="Président">
+            <div class="member-card card">
+                <img src="img2.jpg" class="member-img" alt="Kenza - Président" loading="lazy">
                 <h4>Kenza</h4>
                 <p><small>Président</small></p>
             </div>
-            <div class="member-card">
-                <img src="img3.jpg" class="member-img" alt="Responsable Tech">
+            <div class="member-card card">
+                <img src="img3.jpg" class="member-img" alt="Adjoint président" loading="lazy">
                 <h4>---</h4>
-                <p><small>adjoint president</small></p>
+                <p><small>Adjoint président</small></p>
             </div>
-            <div class="member-card">
-                <img src="img3.jpg" class="member-img" alt="Responsable Tech">
-                <h4>Guira yahaya</h4>
-                <p><small>responsable technique1</small></p>
+            <div class="member-card card">
+                <img src="img3.jpg" class="member-img" alt="Guira Yahaya - Responsable technique" loading="lazy">
+                <h4>Guira Yahaya</h4>
+                <p><small>Responsable technique</small></p>
             </div>
-            <div class="member-card">
-                <img src="img3.jpg" class="member-img" alt="Responsable Tech">
+            <div class="member-card card">
+                <img src="img3.jpg" class="member-img" alt="Responsable technique 2" loading="lazy">
                 <h4>---</h4>
-                <p><small>responsable technique2</small></p>
+                <p><small>Responsable technique</small></p>
             </div>
-            </div>
+        </div>
 
-        <div class="quote-box reveal">
-            <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--primary); opacity: 0.3;"></i>
+        <div class="quote-box reveal" style="margin-top:40px">
+            <i class="fas fa-quote-left" style="font-size: 2rem; color: var(--primary); opacity: 0.3;" aria-hidden="true"></i>
             <p style="font-style: italic; font-size: 1.2rem; margin-top: 10px;">
                 "L'informatique ne s'apprend pas seulement dans les livres, elle se vit. Rejoindre ce club, c'est choisir de devenir un acteur du changement numérique dès aujourd'hui."
             </p>
@@ -182,7 +233,7 @@ section { padding: 80px 8%; }
             <h2 class="gradient-text">Prêt à nous rejoindre ?</h2>
             <p>Remplissez le formulaire ci-dessous pour postuler.</p>
         </div>
-        <div class="card" style="max-width: 800px; margin: 0 auto; background: white; padding: 10px;">
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
             <div id="ff-compose"></div>
             <script async defer src="https://formfacade.com/include/113910825658767232402/form/1FAIpQLScbt595OZgvcYaC045s0kN3MoESQsfen0-hC2Z-angQZ0DY5A/classic.js?div=ff-compose"></script>
         </div>
@@ -200,13 +251,47 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-/* DARK MODE */
+/* DARK MODE + persistance */
 function mode() {
-    document.body.classList.toggle('light');
-    const icon = document.querySelector('.toggle i');
-    icon.classList.toggle('fa-moon');
-    icon.classList.toggle('fa-sun');
+    const isLight = document.body.classList.toggle('light');
+    const icon = document.querySelector('.theme-toggle i');
+    if (icon) {
+      icon.classList.toggle('fa-moon', !isLight);
+      icon.classList.toggle('fa-sun', isLight);
+    }
+    try { localStorage.setItem('themeLight', isLight ? '1' : '0'); } catch(e){}
 }
+(function initTheme(){
+  try {
+    const saved = localStorage.getItem('themeLight');
+    if (saved === '1') document.body.classList.add('light');
+    const icon = document.querySelector('.theme-toggle i');
+    if (icon) {
+      icon.classList.toggle('fa-moon', !document.body.classList.contains('light'));
+      icon.classList.toggle('fa-sun', document.body.classList.contains('light'));
+    }
+  } catch(e){}
+})();
+
+/* MOBILE NAV TOGGLE */
+function toggleNav(){
+  const nav = document.getElementById('main-nav');
+  const btn = document.querySelector('.nav-toggle');
+  const expanded = nav.classList.toggle('show');
+  btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+}
+
+/* Close mobile nav when clicking outside (optional) */
+document.addEventListener('click', (e) => {
+  const nav = document.getElementById('main-nav');
+  const btn = document.querySelector('.nav-toggle');
+  if (!nav || !btn) return;
+  if (window.innerWidth > 768) return;
+  if (!nav.contains(e.target) && !btn.contains(e.target)) {
+    nav.classList.remove('show');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+});
 </script>
 </body>
 </html>
